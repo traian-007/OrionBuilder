@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>4f343ff4-3002-45a2-bcb1-cbb2bfae4013</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Orion.Contracts\Orion.Contracts.csproj" />
+    <ProjectReference Include="..\Orion.Application\Orion.Application.csproj" />
+    <ProjectReference Include="..\Orion.Infrastructure\Orion.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
