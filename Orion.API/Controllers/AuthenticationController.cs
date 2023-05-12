@@ -29,7 +29,7 @@ namespace Orion.API.Controlles
 
             return registerResult.Match(
                 authResult => Ok(MapAuthResult(authResult)),
-                _ => Problem(statusCode: StatusCodes.Status409Conflict, title: "Email already exists."));
+                error => Problem(statusCode: (int)error.StatusCode, title: error.ErrorMessage));
         }
 
         private static AuthenticationResponse MapAuthResult(AuthenticationResult authResult)
