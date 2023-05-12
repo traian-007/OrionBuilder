@@ -1,4 +1,6 @@
-﻿using Orion.Application.Common.Interfaces.Authentication;
+﻿using OneOf;
+using Orion.Application.Common.Errors;
+using Orion.Application.Common.Interfaces.Authentication;
 using Orion.Application.Common.Interfaces.Persistence;
 using Orion.Domain.Entities;
 
@@ -14,12 +16,13 @@ namespace Orion.Application.Services.Authentication
             _userRepository = userRepository;
         }
 
-        public AuthenticationResult Register(string firstName, string lastName, string email, string password)
+        public OneOf<AuthenticationResult, IError> Register(string firstName, string lastName, string email, string password)
         {
             // 1. Validate the user doesn't exist
             if(_userRepository.GetUserByEmail(email) is not null)
             {
-                throw new Exception("User with given email already exist!");
+                return new DuplicateEmailError();
+                //throw new Exception("User with given email already exist!");
             }
 
             // 2. Create user (generate a unique ID) & Persist to DB

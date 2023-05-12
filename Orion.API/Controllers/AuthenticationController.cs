@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OneOf;
+using Orion.Application.Common.Errors;
 using Orion.Application.Services.Authentication;
 using Orion.Contracts.Authentication;
 
@@ -19,20 +21,25 @@ namespace Orion.API.Controlles
         [HttpPost("register")]
         public IActionResult Register(RegisterRequest request)
         {
-            var authResult = _authenticationService.Register(
+            OneOf<AuthenticationResult, IError> registerResult = _authenticationService.Register(
                 request.FirstName, 
                 request.LastName, 
                 request.Email, 
                 request.Password);
 
-            var response = new AuthenticationResponse(
-                authResult.User.Id,
-                authResult.User.FirstName,
-                authResult.User.LastName,
-                authResult.User.Email,
-                authResult.Token);
-            
-            return Ok(response);
+            return registerResult.Match(
+                authResult => Ok(MapAuthResult(authResult)),
+                _ => Problem(statusCode: StatusCodes.Status409Conflict, title: "Email already exists."));
+        }
+
+        private static AuthenticationResponse MapAuthResult(AuthenticationResult authResult)
+        {
+            return new AuthenticationResponse(
+            authResult.User.Id,
+            authResult.User.FirstName,
+            authResult.User.LastName,
+            authResult.User.Email,
+            authResult.Token);
         }
 
         [HttpPost("login")]

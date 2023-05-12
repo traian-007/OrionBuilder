@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Options;
 using System.Diagnostics;
 
-namespace Orion.API.Errors
+namespace Orion.API.Common.Errors
 {
     public class OrionProblemDetailsFactory : ProblemDetailsFactory
     {

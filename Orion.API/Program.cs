@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Orion.API.Errors;
-using Orion.API.Filters;
+using Orion.API.Common.Errors;
 using Orion.Application;
 using Orion.Ifrastructure;
 
@@ -20,13 +19,6 @@ var app = builder.Build();
 {
     /* app.UseMiddleware<ErrorHandlingMiddleware>();*/
     app.UseExceptionHandler("/error");
-
- /*   app.Map("/error", (HttpContext httpContext) =>
-    {
-        Exception? exception = HttpContext.Features.Get<IExceptionHandlerFeature>()?.Error;
-
-        return Results.Problem();
-    });*/
 
     app.UseHttpsRedirection();
 
