@@ -1,3 +1,4 @@
+using Orion.API.Filters;
 using Orion.Application;
 using Orion.Ifrastructure;
 
@@ -7,11 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
         .AddApplication()
         .AddInfrastructure(builder.Configuration);
 
-    builder.Services.AddControllers();
+    builder.Services.AddControllers(options => options.Filters.Add<ErrorHandlingFilterAttribute>());
 }
 
 var app = builder.Build();
 {
+   /* app.UseMiddleware<ErrorHandlingMiddleware>();*/
+
     app.UseHttpsRedirection();
 
     app.MapControllers();
