@@ -34,13 +34,10 @@ namespace Orion.Application.Services.Authentication
 
             // 3. Create JWT token
 
-            var token = _jwtTokenGenerator.GenerateToken(user.Id, firstName, lastName);
+            var token = _jwtTokenGenerator.GenerateToken(user);
 
             return new AuthenticationResult(
-                user.Id,
-                firstName,
-                lastName,
-                email,
+                user,
                 token);
         }
 
@@ -51,6 +48,7 @@ namespace Orion.Application.Services.Authentication
             {
                 throw new Exception("User with given email does not exist!");
             }
+
             // 2. Validate the password is correct
             if (user.Password != password)
             {
@@ -59,13 +57,10 @@ namespace Orion.Application.Services.Authentication
 
             // 3. Create JWT token
 
-            var token = _jwtTokenGenerator.GenerateToken(user.Id, user.FirstName, user.LastName);
+            var token = _jwtTokenGenerator.GenerateToken(user);
 
             return new AuthenticationResult(
-                user.Id,
-                user.FirstName,
-                user.LastName,
-                email,
+                user,
                 token);
         }
     }
