@@ -1,7 +1,9 @@
-﻿using FluentResults;
+﻿using ErrorOr;
+using FluentResults;
 using Orion.Application.Common.Errors;
 using Orion.Application.Common.Interfaces.Authentication;
 using Orion.Application.Common.Interfaces.Persistence;
+using Orion.Domain.Common.Errors;
 using Orion.Domain.Entities;
 
 namespace Orion.Application.Services.Authentication
@@ -16,12 +18,12 @@ namespace Orion.Application.Services.Authentication
             _userRepository = userRepository;
         }
 
-        public Result<AuthenticationResult> Register(string firstName, string lastName, string email, string password)
+        public ErrorOr<AuthenticationResult> Register(string firstName, string lastName, string email, string password)
         {
             // 1. Validate the user doesn't exist
             if(_userRepository.GetUserByEmail(email) is not null)
             {
-                return Result.Fail<AuthenticationResult>(new[] { new DuplicateEmailError() });
+                return Errors.User.DuplicateEmail;
                 //throw new Exception("User with given email already exist!");
             }
 
@@ -44,18 +46,18 @@ namespace Orion.Application.Services.Authentication
                 token);
         }
 
-        public AuthenticationResult Login(string email, string password)
+        public ErrorOr<AuthenticationResult> Login(string email, string password)
         {
             // 1. Validation the user exists
             if(_userRepository.GetUserByEmail(email) is not User user)
             {
-                throw new Exception("User with given email does not exist!");
+                return Errors.Authentication.InvalidCredentials;
             }
 
             // 2. Validate the password is correct
             if (user.Password != password)
             {
-                throw new Exception("Invalid password");
+                return new[] { Errors.Authentication.InvalidCredentials };
             }
 
             // 3. Create JWT token
