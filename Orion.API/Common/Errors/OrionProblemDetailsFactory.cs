@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Options;
-using Orion.API.Http;
+using Orion.API.Common.Http;
 using System.Diagnostics;
 
 namespace Orion.API.Common.Errors

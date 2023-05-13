@@ -1,4 +1,4 @@
-﻿namespace Orion.API.Http
+﻿namespace Orion.API.Common.Http
 {
     public static class HttpContextItemKeys
     {
