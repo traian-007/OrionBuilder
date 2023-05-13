@@ -1,4 +1,5 @@
 ﻿using ErrorOr;
+using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Orion.API.Controllers;
@@ -14,23 +15,27 @@ namespace Orion.API.Controlles
     public class AuthenticationController : ApiController
     {
         private readonly ISender _mediator;
+        private readonly IMapper _mapper;
 
-        public AuthenticationController(ISender mediator)
+        public AuthenticationController(ISender mediator, IMapper mapper)
         {
             _mediator = mediator;
+            _mapper = mapper;
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterRequest request)
         {
-            var command = new RegisterCommand(request.FirstName, request.LastName, request.Email, request.Password);
+            var command = _mapper.Map<RegisterCommand>(request);
+           // var command = new RegisterCommand(request.FirstName, request.LastName, request.Email, request.Password);
 
             ErrorOr<AuthenticationResult> registerResult = await _mediator.Send(command);
             //ErrorOr<AuthenticationResult> registerResult = _authenticationCommandService.Register(
 
 
             return registerResult.Match(
-                authResult => Ok(MapAuthResult(authResult)),
+                //authResult => Ok(MapAuthResult(authResult)),
+                authResult => Ok(_mapper.Map<AuthenticationResponse>(authResult)),
                 errors => Problem(errors));
         }
 
@@ -38,7 +43,8 @@ namespace Orion.API.Controlles
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginRequest request)
         {
-            var query = new LoginQuery(request.Email, request.Password);
+            var query = _mapper.Map<LoginQuery>(request);
+            //var query = new LoginQuery(request.Email, request.Password);
             //ErrorOr<AuthenticationResult> authResult = _authenticationQueryService.Login(
 
             ErrorOr<AuthenticationResult> authResult = await _mediator.Send(query);
@@ -49,7 +55,8 @@ namespace Orion.API.Controlles
             }
 
             return authResult.Match(
-               authResult => Ok(MapAuthResult(authResult)),
+               //authResult => Ok(MapAuthResult(authResult)),
+               authResult => Ok(_mapper.Map<AuthenticationResponse>(authResult)),
                errors => Problem(errors));
 
         }

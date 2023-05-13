@@ -1,18 +1,16 @@
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Orion.API.Common.Errors;
+using Orion.API;
 using Orion.Application;
 using Orion.Ifrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 {
     builder.Services
+        .AddPresentation()
         .AddApplication()
         .AddInfrastructure(builder.Configuration);
 
     // builder.Services.AddControllers(options => options.Filters.Add<ErrorHandlingFilterAttribute>());
-    builder.Services.AddControllers();
-
-    builder.Services.AddSingleton<ProblemDetailsFactory, OrionProblemDetailsFactory>();
+    
 }
 
 var app = builder.Build();

@@ -1,6 +1,6 @@
 ﻿using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
-using Orion.API.Http;
+using Orion.API.Common.Http;
 
 namespace Orion.API.Controllers
 {
