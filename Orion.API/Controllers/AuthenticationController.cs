@@ -1,6 +1,7 @@
 ﻿using ErrorOr;
 using MapsterMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Orion.API.Controllers;
 using Orion.Application.Authentication.Commands.Register;
@@ -11,6 +12,7 @@ using Orion.Contracts.Authentication;
 namespace Orion.API.Controlles
 {
     [Route("auth")]
+    [AllowAnonymous]
     // [ErrorHandlingFilter]
     public class AuthenticationController : ApiController
     {

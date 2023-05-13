@@ -14,6 +14,13 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orion.Infrastructure", "Orion.Infrastructure\Orion.Infrastructure.csproj", "{80EA3A56-D153-4B02-9FB0-144EF1DAA7A7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Requests", "Requests", "{FE695305-F6A4-4144-9A39-69CACF0BE5FB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Packages", "Packages", "{1155AC8F-2B1A-45B0-BB3E-ABA937691713}"
+	ProjectSection(SolutionItems) = preProject
+		ListPackages.http = ListPackages.http
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Authentication", "Authentication", "{2E9737F1-8932-4C49-9158-B546491464FF}"
 	ProjectSection(SolutionItems) = preProject
 		Login.http = Login.http
 		Register.http = Register.http
@@ -48,6 +55,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1155AC8F-2B1A-45B0-BB3E-ABA937691713} = {FE695305-F6A4-4144-9A39-69CACF0BE5FB}
+		{2E9737F1-8932-4C49-9158-B546491464FF} = {FE695305-F6A4-4144-9A39-69CACF0BE5FB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AE0B5AED-9D99-4DC1-8962-F36938D2DC09}
