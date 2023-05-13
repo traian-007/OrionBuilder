@@ -1,6 +1,6 @@
 ﻿using Orion.Domain.Entities;
 
-namespace Orion.Application.Services.Authentication
+namespace Orion.Application.Authentication.Common
 {
     public record AuthenticationResult(
         User User,

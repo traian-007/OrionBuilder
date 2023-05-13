@@ -1,9 +1,10 @@
 ﻿using ErrorOr;
-using FluentResults;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Orion.API.Controllers;
-using Orion.Application.Common.Errors;
-using Orion.Application.Services.Authentication;
+using Orion.Application.Authentication.Commands.Register;
+using Orion.Application.Authentication.Common;
+using Orion.Application.Authentication.Queries.Login;
 using Orion.Contracts.Authentication;
 
 namespace Orion.API.Controlles
@@ -12,21 +13,21 @@ namespace Orion.API.Controlles
     // [ErrorHandlingFilter]
     public class AuthenticationController : ApiController
     {
-        private readonly IAuthenticationService _authenticationService;
+        private readonly ISender _mediator;
 
-        public AuthenticationController(IAuthenticationService authenticationService)
+        public AuthenticationController(ISender mediator)
         {
-            _authenticationService = authenticationService;
+            _mediator = mediator;
         }
 
         [HttpPost("register")]
-        public IActionResult Register(RegisterRequest request)
+        public async Task<IActionResult> Register(RegisterRequest request)
         {
-            ErrorOr<AuthenticationResult> registerResult = _authenticationService.Register(
-                request.FirstName, 
-                request.LastName, 
-                request.Email, 
-                request.Password);
+            var command = new RegisterCommand(request.FirstName, request.LastName, request.Email, request.Password);
+
+            ErrorOr<AuthenticationResult> registerResult = await _mediator.Send(command);
+            //ErrorOr<AuthenticationResult> registerResult = _authenticationCommandService.Register(
+
 
             return registerResult.Match(
                 authResult => Ok(MapAuthResult(authResult)),
@@ -35,13 +36,14 @@ namespace Orion.API.Controlles
 
 
         [HttpPost("login")]
-        public IActionResult Login(LoginRequest request)
+        public async Task<IActionResult> Login(LoginRequest request)
         {
-            ErrorOr<AuthenticationResult> authResult = _authenticationService.Login(
-               request.Email,
-               request.Password);
+            var query = new LoginQuery(request.Email, request.Password);
+            //ErrorOr<AuthenticationResult> authResult = _authenticationQueryService.Login(
 
-            if(authResult.IsError && authResult.FirstError == Domain.Common.Errors.Errors.Authentication.InvalidCredentials)
+            ErrorOr<AuthenticationResult> authResult = await _mediator.Send(query);
+
+            if (authResult.IsError && authResult.FirstError == Domain.Common.Errors.Errors.Authentication.InvalidCredentials)
             {
                 return Problem(statusCode: StatusCodes.Status401Unauthorized, title: authResult.FirstError.Description);
             }
