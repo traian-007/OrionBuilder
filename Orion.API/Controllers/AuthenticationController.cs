@@ -1,9 +1,9 @@
 ﻿using ErrorOr;
-using FluentResults;
 using Microsoft.AspNetCore.Mvc;
 using Orion.API.Controllers;
-using Orion.Application.Common.Errors;
-using Orion.Application.Services.Authentication;
+using Orion.Application.Services.Authentication.Commands;
+using Orion.Application.Services.Authentication.Common;
+using Orion.Application.Services.Authentication.Queries;
 using Orion.Contracts.Authentication;
 
 namespace Orion.API.Controlles
@@ -12,17 +12,19 @@ namespace Orion.API.Controlles
     // [ErrorHandlingFilter]
     public class AuthenticationController : ApiController
     {
-        private readonly IAuthenticationService _authenticationService;
+        private readonly IAuthenticationQueryService _authenticationQueryService;
+        private readonly IAuthenticationCommandService _authenticationCommandService;
 
-        public AuthenticationController(IAuthenticationService authenticationService)
+        public AuthenticationController(IAuthenticationQueryService authenticationQueryService, IAuthenticationCommandService authenticationCommandService)
         {
-            _authenticationService = authenticationService;
+            _authenticationQueryService = authenticationQueryService;
+            _authenticationCommandService = authenticationCommandService;
         }
 
         [HttpPost("register")]
         public IActionResult Register(RegisterRequest request)
         {
-            ErrorOr<AuthenticationResult> registerResult = _authenticationService.Register(
+            ErrorOr<AuthenticationResult> registerResult = _authenticationCommandService.Register(
                 request.FirstName, 
                 request.LastName, 
                 request.Email, 
@@ -37,7 +39,7 @@ namespace Orion.API.Controlles
         [HttpPost("login")]
         public IActionResult Login(LoginRequest request)
         {
-            ErrorOr<AuthenticationResult> authResult = _authenticationService.Login(
+            ErrorOr<AuthenticationResult> authResult = _authenticationQueryService.Login(
                request.Email,
                request.Password);
 
