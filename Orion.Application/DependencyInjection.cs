@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Orion.Application.Services.Authentication.Commands;
-using Orion.Application.Services.Authentication.Queries;
+using MediatR;
+
 
 namespace Orion.Application
 {
@@ -8,8 +8,9 @@ namespace Orion.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddScoped<IAuthenticationQueryService, AuthenticationQueryService>();
-            services.AddScoped<IAuthenticationCommandService, AuthenticationCommandService>();
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(DependencyInjection).Assembly));
+            /*services.AddScoped<IAuthenticationQueryService, AuthenticationQueryService>();
+            services.AddScoped<IAuthenticationCommandService, AuthenticationCommandService>();*/
 
             return services;
         }
