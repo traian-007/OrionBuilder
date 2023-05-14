@@ -1,0 +1,18 @@
+@host=http://localhost:5023
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyZDYzYjlmNC01YzRkLTRmYzQtOWRlNy1hMzA3NGIxODMwMzUiLCJnaXZlbl9uYW1lIjoiQW5kcmlhbiIsImZhbWlseV9uYW1lIjoiR2FpZGFyamkiLCJqdGkiOiIwZGUyYWMwZS1lZTFkLTQ3ZTMtODcwMy1iZjBjZDcyYzViZDgiLCJleHAiOjE2ODQwODYzOTcsImlzcyI6Ik9yaW9uIiwiYXVkIjoiT3Jpb24ifQ.7MQT3ucOVzL0bQ-owfTcX3r9gJLhfN_CAbzj92RU6x4
+@hostId=sdfa
+
+POST {{host}}/api/{{hostId}}/packages
+Content-Type: application/json
+Authorization: Bearer {{token}}
+Accept: application/json
+
+{
+    "serviceId": 45,
+    "type" : 3,
+    "serviceFeatures" : [{
+        "featureId": 34,
+        "packType" : 5
+        }
+    ]
+}

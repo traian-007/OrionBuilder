@@ -24,7 +24,7 @@ namespace Orion.Application.Authentication.Queries.Login
             await Task.CompletedTask;
 
             // 1. Validation the user exists
-            if (_userRepository.GetUserByEmail(query.Email) is not User user)
+            if (_userRepository.GetUserByEmail(query.Email) is not UserEntity user)
             {
                 return Errors.Authentication.InvalidCredentials;
             }

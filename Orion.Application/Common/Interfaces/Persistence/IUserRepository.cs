@@ -4,7 +4,7 @@ namespace Orion.Application.Common.Interfaces.Persistence
 {
     public interface IUserRepository
     {
-        User? GetUserByEmail(string email);
-        void Add(User user);
+        UserEntity? GetUserByEmail(string email);
+        void Add(UserEntity user);
     }
 }

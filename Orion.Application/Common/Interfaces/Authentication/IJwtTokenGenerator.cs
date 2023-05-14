@@ -4,6 +4,6 @@ namespace Orion.Application.Common.Interfaces.Authentication
 {
     public interface IJwtTokenGenerator
     {
-        string GenerateToken(User user);
+        string GenerateToken(UserEntity user);
     }
 }

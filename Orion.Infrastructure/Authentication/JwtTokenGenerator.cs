@@ -20,7 +20,7 @@ namespace Orion.Infrastructure.Authentication
             _jwtSettings = jwtOptions.Value;
         }
 
-        public string GenerateToken(User user)
+        public string GenerateToken(UserEntity user)
         {
             var signingCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(

@@ -17,6 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Requests", "Requests", "{FE
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Packages", "Packages", "{1155AC8F-2B1A-45B0-BB3E-ABA937691713}"
 	ProjectSection(SolutionItems) = preProject
+		CreatePackage.http = CreatePackage.http
 		ListPackages.http = ListPackages.http
 	EndProjectSection
 EndProject
