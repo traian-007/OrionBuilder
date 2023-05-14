@@ -20,7 +20,7 @@ namespace Orion.Application.Services.Authentication.Queries
         public ErrorOr<AuthenticationResult> Login(string email, string password)
         {
             // 1. Validation the user exists
-            if (_userRepository.GetUserByEmail(email) is not User user)
+            if (_userRepository.GetUserByEmail(email) is not UserEntity user)
             {
                 return Errors.Authentication.InvalidCredentials;
             }

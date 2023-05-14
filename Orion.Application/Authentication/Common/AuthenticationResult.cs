@@ -3,6 +3,6 @@
 namespace Orion.Application.Authentication.Common
 {
     public record AuthenticationResult(
-        User User,
+        UserEntity User,
         string Token);
 }

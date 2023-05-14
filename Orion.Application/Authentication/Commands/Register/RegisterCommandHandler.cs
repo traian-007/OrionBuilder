@@ -32,7 +32,7 @@ namespace Orion.Application.Authentication.Commands.Register
             }
 
             // 2. Create user (generate a unique ID) & Persist to DB
-            var user = new User
+            var user = new UserEntity
             {
                 FirstName = command.FirstName,
                 LastName = command.LastName,
